@@ -1,14 +1,14 @@
 <template>
-  <main>
-    
-  </main>
+  <main></main>
+
+  <Timeline />
 </template>
 
 <script setup>
 let holding = false;
 let posX = 0;
 let posY = 0;
-let element
+let element;
 
 function mouseDown(event) {
   event.preventDefault();
@@ -38,27 +38,36 @@ function mouseMove(event) {
 }
 
 onMounted(() => {
-  element = document.querySelector("main");
+  element = document.querySelector("body");
 
   element.addEventListener("mousedown", mouseDown);
   element.addEventListener("mouseup", mouseUp);
   element.addEventListener("mousemove", mouseMove);
+  element.style.cursor = "grab";
 });
 
-onBeforeUnmount(() =>{
+onBeforeUnmount(() => {
   element.removeEventListener("mousedown", mouseDown);
   element.removeEventListener("mouseup", mouseUp);
   element.removeEventListener("mousemove", mouseMove);
 });
+
+useHead({
+  bodyAttrs: {
+    class: "grabbable",
+  },
+});
 </script>
 
 <style scoped>
-main {
-  background-color: gray;
-  width: 1000vw;
-  height: 1000vh;
+.grabbable {
+  display: inline-block;
   overflow: hidden;
-  cursor: grab;
   user-select: none;
+}
+
+main {
+  min-width: 100vw;
+  min-height: 100vh;
 }
 </style>
