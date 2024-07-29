@@ -24,6 +24,6 @@ defineProps({
 
 <style>
 .year {
-  margin-left: -0.5rem;
+  margin-left: -0.6rem;
 }
 </style>
