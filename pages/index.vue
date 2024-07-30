@@ -1,7 +1,17 @@
 <template>
   <main>
-    <Node :member="elder._stem" :current-year="currentYear" />
-    <Node :member="elder.spouse" :current-year="currentYear" />
+    <Node
+      :member="elder.spouse"
+      :starting-year="startingYear"
+      :current-year="currentYear"
+      :show-children="false"
+    />
+
+    <Node
+      :member="elder._stem"
+      :starting-year="startingYear"
+      :current-year="currentYear"
+    />
   </main>
 
   <Timeline :starting-year="startingYear" :current-year="currentYear" />
@@ -77,6 +87,6 @@ useHead({
 main {
   min-width: 100vw;
   min-height: 100vh;
-  margin-left: 10.5px
+  margin-left: 10.5px;
 }
 </style>
