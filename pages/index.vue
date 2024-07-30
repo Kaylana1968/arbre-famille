@@ -4,13 +4,14 @@
       :member="elder.spouse"
       :starting-year="startingYear"
       :current-year="currentYear"
-      :show-children="false"
+      :first="true"
     />
 
     <Node
       :member="elder._stem"
       :starting-year="startingYear"
       :current-year="currentYear"
+      :first="true"
     />
   </main>
 
