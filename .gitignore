@@ -1,6 +1,5 @@
 /content
-/public/img/families
-/public/img/members
+/public/img
 
 # Nuxt dev/build outputs
 .output
