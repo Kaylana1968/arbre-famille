@@ -1,7 +1,11 @@
 <template>
   <button id="hide-timeline" @click="visible = !visible">Hide timeline</button>
 
-  <div id="timeline" ref="timelineElement" :style="`visibility: ${visible ? 'visible' : 'hidden'}`">
+  <div
+    id="timeline"
+    ref="timelineElement"
+    :style="`visibility: ${visible ? 'visible' : 'hidden'}`"
+  >
     <TimelinePart
       v-for="year in numberYear"
       :year="year + startingYear - 1"
@@ -13,20 +17,26 @@
 </template>
 
 <script setup>
-const startingYear = 1900;
-const numberYear = new Date().getUTCFullYear() - startingYear + 1;
+const props = defineProps({
+  startingYear: Number,
+  currentYear: Number,
+});
+
+const numberYear = props.currentYear - props.startingYear + 1;
 const visible = ref(true);
-const timelineElement = ref(null)
+const timelineElement = ref(null);
 
 onMounted(() => {
-  document.querySelector("main").style.width = `${timelineElement.value.scrollWidth}px`;
+  document.querySelector(
+    "main"
+  ).style.width = `${timelineElement.value.scrollWidth}px`;
 });
 </script>
 
 <style scoped>
 #timeline {
   position: sticky;
-  margin: 0 1rem;
+  margin: 0 3rem;
   bottom: 1rem;
   font-size: 1rem;
   display: inline-flex;

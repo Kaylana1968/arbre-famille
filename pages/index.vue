@@ -1,10 +1,18 @@
 <template>
-  <main></main>
+  <main>
+    <Node :member="elder._stem" :current-year="currentYear" />
+    <Node :member="elder.spouse" :current-year="currentYear" />
+  </main>
 
-  <Timeline />
+  <Timeline :starting-year="startingYear" :current-year="currentYear" />
 </template>
 
 <script setup>
+const startingYear = 1900;
+const currentYear = new Date().getUTCFullYear();
+const elder = (await queryContent().sort({ birth: 1 }).find())[0];
+
+// Grab to slide
 let holding = false;
 let posX = 0;
 let posY = 0;
@@ -69,5 +77,6 @@ useHead({
 main {
   min-width: 100vw;
   min-height: 100vh;
+  margin-left: 10.5px
 }
 </style>
