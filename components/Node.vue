@@ -2,12 +2,43 @@
   <div :id="member" class="container">
     <!-- Line that link parent line to his child -->
     <svg class="child-line" width="1" :height="parentDistance">
-      <line x1="0" y1="0" x2="0" :y2="parentDistance" stroke="gray" />
+      <line
+        x1="0"
+        y1="0"
+        x2="0"
+        :y2="parentDistance"
+        stroke="gray"
+        stroke-width="2"
+      />
+    </svg>
+
+    <!-- Line of the wedding  -->
+    <svg
+      v-if="!showChildren"
+      class="wedding-line"
+      width="1"
+      :height="spouseDistance"
+    >
+      <line
+        x1="0"
+        y1="0"
+        x2="0"
+        :y2="spouseDistance"
+        stroke="pink"
+        stroke-width="2"
+      />
     </svg>
 
     <!-- Line of the member  -->
     <svg class="life-line" :width="lifeLength" height="1">
-      <line x1="0" y1="0" :x2="lifeLength" y2="0" stroke="gray" />
+      <line
+        x1="0"
+        y1="0"
+        :x2="lifeLength"
+        y2="0"
+        stroke="gray"
+        stroke-width="2"
+      />
     </svg>
 
     <!-- Line marking the death of the member -->
@@ -17,7 +48,14 @@
       :width="lifeLength"
       height="20"
     >
-      <line :x1="lifeLength" y1="0" :x2="lifeLength" y2="20" stroke="gray" />
+      <line
+        :x1="lifeLength"
+        y1="0"
+        :x2="lifeLength"
+        y2="20"
+        stroke="gray"
+        stroke-width="2"
+      />
     </svg>
 
     <!-- Image of the member -->
@@ -75,6 +113,8 @@ const otherChildren = memberInfos.children
 
 const parentDistance = ref(0);
 const childLineStart = ref("0");
+const spouseDistance = ref(0);
+const spouseLineStart = ref("0");
 
 const birthYear = parseInt(memberInfos.birth.slice(0, 4)); // year of birth
 const lifeStart = `${yearSize * (birthYear - props.startingYear) + 5.5}px`; // distance in px between birth year and starting year of the timeline
@@ -92,16 +132,30 @@ const showChildren = !(
 );
 
 onMounted(() => {
+  const memberPosition = document
+    .getElementById(props.member)
+    .getBoundingClientRect();
+
+  // child line part
   if (props.parent) {
     const parentPosition = document
       .getElementById(props.parent)
       .getBoundingClientRect();
-    const memberPosition = document
-      .getElementById(props.member)
-      .getBoundingClientRect();
 
     parentDistance.value = Math.abs(parentPosition.y - memberPosition.y);
     childLineStart.value = `${37.5 - parentDistance.value}px`;
+  }
+
+  if (!showChildren) {
+    const spousePosition = document
+      .getElementById(memberInfos.spouse)
+      .getBoundingClientRect();
+
+    spouseDistance.value = Math.abs(spousePosition.y - memberPosition.y);
+
+    const weddingYear = parseInt(memberInfos.wedding.slice(0, 4));
+
+    spouseLineStart.value = `${yearSize * (weddingYear - birthYear) + 37.5}px`;
   }
 });
 </script>
@@ -133,6 +187,17 @@ svg {
 .life-line {
   margin-top: 37.5px;
   margin-left: 37.5px;
+}
+
+.wedding-line {
+  margin-top: 37.5px;
+  margin-left: v-bind("spouseLineStart");
+}
+
+.wedding-symbol {
+  position: absolute;
+  margin-top: 64.8px;
+  margin-left: v-bind("spouseLineStart");
 }
 
 .death-line {

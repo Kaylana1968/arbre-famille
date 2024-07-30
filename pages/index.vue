@@ -88,6 +88,6 @@ useHead({
 main {
   min-width: 100vw;
   min-height: 100vh;
-  margin-left: 10.5px;
+  margin-left: 10.3px;
 }
 </style>
