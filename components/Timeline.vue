@@ -1,11 +1,5 @@
 <template>
-  <button id="hide-timeline" @click="visible = !visible">Hide timeline</button>
-
-  <div
-    id="timeline"
-    ref="timelineElement"
-    :style="`visibility: ${visible ? 'visible' : 'hidden'}`"
-  >
+  <div id="timeline" ref="timelineElement">
     <TimelinePart
       v-for="year in numberYear"
       :year="year + startingYear - 1"
@@ -23,7 +17,6 @@ const props = defineProps({
 });
 
 const numberYear = props.currentYear - props.startingYear + 1;
-const visible = ref(true);
 const timelineElement = ref(null);
 
 onMounted(() => {
@@ -41,13 +34,6 @@ onMounted(() => {
   font-size: 1rem;
   display: inline-flex;
   align-items: end;
-}
-
-#hide-timeline {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.5rem;
+  user-select: none;
 }
 </style>

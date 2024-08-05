@@ -1,21 +1,25 @@
 <template>
-  <main>
-    <Node
-      :member="elder.spouse"
-      :starting-year="startingYear"
-      :current-year="currentYear"
-      :first="true"
-    />
+  <div id="grabbable">
+    <main>
+      <Node
+        :member="elder.spouse"
+        :starting-year="startingYear"
+        :current-year="currentYear"
+        :first="true"
+      />
 
-    <Node
-      :member="elder._stem"
-      :starting-year="startingYear"
-      :current-year="currentYear"
-      :first="true"
-    />
-  </main>
+      <Node
+        :member="elder._stem"
+        :starting-year="startingYear"
+        :current-year="currentYear"
+        :first="true"
+      />
+    </main>
 
-  <Timeline :starting-year="startingYear" :current-year="currentYear" />
+    <Timeline :starting-year="startingYear" :current-year="currentYear" />
+  </div>
+
+  <HideTimeline />
 </template>
 
 <script setup>
@@ -57,12 +61,11 @@ function mouseMove(event) {
 }
 
 onMounted(() => {
-  element = document.querySelector("body");
+  element = document.getElementById("grabbable");
 
   element.addEventListener("mousedown", mouseDown);
   element.addEventListener("mouseup", mouseUp);
   element.addEventListener("mousemove", mouseMove);
-  element.style.cursor = "grab";
 });
 
 onBeforeUnmount(() => {
@@ -70,18 +73,11 @@ onBeforeUnmount(() => {
   element.removeEventListener("mouseup", mouseUp);
   element.removeEventListener("mousemove", mouseMove);
 });
-
-useHead({
-  bodyAttrs: {
-    class: "grabbable",
-  },
-});
 </script>
 
 <style scoped>
-.grabbable {
-  display: inline-block;
-  overflow: hidden;
+#grabbable {
+  cursor: grab;
   user-select: none;
 }
 

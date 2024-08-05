@@ -1,66 +1,46 @@
 <template>
   <div :id="member" class="container">
+    <!-- Line of the member  -->
+    <LifeLine
+      :year-size="yearSize"
+      :death-year="deathYear"
+      :current-year="currentYear"
+      :birth-year="birthYear"
+      :half-image-size="imageSize / 2"
+    />
+
     <!-- Line that link parent line to his child -->
-    <svg class="child-line" width="1" :height="parentDistance">
-      <line
-        x1="0"
-        y1="0"
-        x2="0"
-        :y2="parentDistance"
-        stroke="gray"
-        stroke-width="2"
-      />
-    </svg>
+    <ChildLine
+      v-if="parent"
+      :member="member"
+      :parent="parent"
+      :half-image-size="imageSize / 2"
+    />
 
     <!-- Line of the wedding  -->
-    <svg
+    <WeddingLine
       v-if="!showChildren"
-      class="wedding-line"
-      width="1"
-      :height="spouseDistance"
-    >
-      <line
-        x1="0"
-        y1="0"
-        x2="0"
-        :y2="spouseDistance"
-        stroke="pink"
-        stroke-width="2"
-      />
-    </svg>
-
-    <!-- Line of the member  -->
-    <svg class="life-line" :width="lifeLength" height="1">
-      <line
-        x1="0"
-        y1="0"
-        :x2="lifeLength"
-        y2="0"
-        stroke="gray"
-        stroke-width="2"
-      />
-    </svg>
+      :member="member"
+      :spouse="memberInfos.spouse"
+      :wedding-year="parseInt(memberInfos.wedding.slice(0, 4))"
+      :birth-year="birthYear"
+      :year-size="yearSize"
+      :half-image-size="imageSize / 2"
+    />
 
     <!-- Line marking the death of the member -->
-    <svg
-      v-if="memberInfos.death"
-      class="death-line"
-      :width="lifeLength"
-      height="20"
-    >
-      <line
-        :x1="lifeLength"
-        y1="0"
-        :x2="lifeLength"
-        y2="20"
-        stroke="gray"
-        stroke-width="2"
-      />
-    </svg>
+    <DeathLine
+      v-if="deathYear"
+      :year-size="yearSize"
+      :death-year="deathYear"
+      :current-year="currentYear"
+      :birth-year="birthYear"
+      :half-image-size="imageSize / 2"
+    />
 
     <!-- Image of the member -->
     <div class="image-container">
-      <img :src="memberInfos.image" width="75" height="75" />
+      <img :src="memberInfos.image" :width="imageSize" :height="imageSize" />
     </div>
   </div>
 
@@ -100,6 +80,7 @@ const props = defineProps({
 });
 
 const yearSize = 136; // Size in px of the length of one year in the website
+const imageSize = 75;
 
 const memberInfos = await queryContent(props.member).findOne();
 const spouseInfos = await queryContent(memberInfos.spouse).findOne();
@@ -111,53 +92,18 @@ const otherChildren = memberInfos.children
   .filter((child) => !commonChildren.includes(child))
   .reverse();
 
-const parentDistance = ref(0);
-const childLineStart = ref("0");
-const spouseDistance = ref(0);
-const spouseLineStart = ref("0");
-
 const birthYear = parseInt(memberInfos.birth.slice(0, 4)); // year of birth
+const deathYear =
+  memberInfos.death === null ? null : parseInt(memberInfos.death.slice(0, 4));
+
 const lifeStart = `${yearSize * (birthYear - props.startingYear) + 5.5}px`; // distance in px between birth year and starting year of the timeline
-const lifeLength =
-  yearSize *
-  ((memberInfos.death
-    ? parseInt(memberInfos.death.slice(0, 4))
-    : props.currentYear) -
-    birthYear); // length in px of the line from his birth to his death or now if alive
+const imageSizePx = `${imageSize}px`;
 
 // false if female and (first node or spouse is a sibling)
 const showChildren = !(
   !memberInfos.male &&
   (props.first || memberInfos.siblings.includes(memberInfos.spouse))
 );
-
-onMounted(() => {
-  const memberPosition = document
-    .getElementById(props.member)
-    .getBoundingClientRect();
-
-  // child line part
-  if (props.parent) {
-    const parentPosition = document
-      .getElementById(props.parent)
-      .getBoundingClientRect();
-
-    parentDistance.value = Math.abs(parentPosition.y - memberPosition.y);
-    childLineStart.value = `${37.5 - parentDistance.value}px`;
-  }
-
-  if (!showChildren) {
-    const spousePosition = document
-      .getElementById(memberInfos.spouse)
-      .getBoundingClientRect();
-
-    spouseDistance.value = Math.abs(spousePosition.y - memberPosition.y);
-
-    const weddingYear = parseInt(memberInfos.wedding.slice(0, 4));
-
-    spouseLineStart.value = `${yearSize * (weddingYear - birthYear) + 37.5}px`;
-  }
-});
 </script>
 
 <style scoped>
@@ -167,8 +113,8 @@ onMounted(() => {
 }
 
 .image-container {
-  width: 75px;
-  height: 75px;
+  width: v-bind("imageSizePx");
+  height: v-bind("imageSizePx");
   border-radius: 50%;
   border: 1px solid black;
   overflow: hidden;
@@ -177,31 +123,5 @@ onMounted(() => {
 svg {
   position: absolute;
   z-index: -10;
-}
-
-.child-line {
-  margin-top: v-bind("childLineStart");
-  margin-left: 37.5px;
-}
-
-.life-line {
-  margin-top: 37.5px;
-  margin-left: 37.5px;
-}
-
-.wedding-line {
-  margin-top: 37.5px;
-  margin-left: v-bind("spouseLineStart");
-}
-
-.wedding-symbol {
-  position: absolute;
-  margin-top: 64.8px;
-  margin-left: v-bind("spouseLineStart");
-}
-
-.death-line {
-  margin-top: 27.5px;
-  margin-left: 37.5px;
 }
 </style>
