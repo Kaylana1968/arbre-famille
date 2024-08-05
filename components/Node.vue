@@ -85,9 +85,11 @@ const imageSize = 75;
 const memberInfos = await queryContent(props.member).findOne();
 const spouseInfos = await queryContent(memberInfos.spouse).findOne();
 
+// Children both member and spouse have
 const commonChildren = memberInfos.children
   .filter((child) => spouseInfos.children.includes(child))
   .reverse();
+// Children only the member have
 const otherChildren = memberInfos.children
   .filter((child) => !commonChildren.includes(child))
   .reverse();
@@ -99,11 +101,10 @@ const deathYear =
 const lifeStart = `${yearSize * (birthYear - props.startingYear) + 5.5}px`; // distance in px between birth year and starting year of the timeline
 const imageSizePx = `${imageSize}px`;
 
-// false if female and (first node or spouse is a sibling)
-const showChildren = !(
-  !memberInfos.male &&
-  (props.first || memberInfos.siblings.includes(memberInfos.spouse))
-);
+// true if male and not first not married to sibling
+const showChildren =
+  memberInfos.male ||
+  !(props.first || memberInfos.siblings.includes(memberInfos.spouse));
 </script>
 
 <style scoped>
