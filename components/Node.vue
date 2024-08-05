@@ -39,9 +39,7 @@
     />
 
     <!-- Image of the member -->
-    <div class="image-container">
-      <img :src="memberInfos.image" :width="imageSize" :height="imageSize" />
-    </div>
+    <MemberImage :image="memberInfos.image" :image-size="imageSize" />
   </div>
 
   <!-- Nodes of the children of the member with his current spouse -->
@@ -95,30 +93,22 @@ const otherChildren = memberInfos.children
   .reverse();
 
 const birthYear = parseInt(memberInfos.birth.slice(0, 4)); // year of birth
-const deathYear =
-  memberInfos.death === null ? null : parseInt(memberInfos.death.slice(0, 4));
-
-const lifeStart = `${yearSize * (birthYear - props.startingYear) + 5.5}px`; // distance in px between birth year and starting year of the timeline
-const imageSizePx = `${imageSize}px`;
+const deathYear = memberInfos.death
+  ? parseInt(memberInfos.death.slice(0, 4))
+  : null;
 
 // true if male and not first not married to sibling
 const showChildren =
   memberInfos.male ||
   !(props.first || memberInfos.siblings.includes(memberInfos.spouse));
+
+const lifeStart = `${yearSize * (birthYear - props.startingYear) + 5.5}px`; // distance in px between birth year and starting year of the timeline
 </script>
 
 <style scoped>
 .container {
   margin-bottom: 1rem;
   margin-left: v-bind("lifeStart");
-}
-
-.image-container {
-  width: v-bind("imageSizePx");
-  height: v-bind("imageSizePx");
-  border-radius: 50%;
-  border: 1px solid black;
-  overflow: hidden;
 }
 
 svg {
