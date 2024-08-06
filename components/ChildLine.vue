@@ -15,26 +15,15 @@
 const props = defineProps({
   member: String,
   parent: String,
+  childNumber: Number,
+  memberHeight: Number,
   halfImageSize: Number,
 });
 
 const halfImageSizePx = `${props.halfImageSize}px`;
 
-const parentDistance = ref(0);
-const childLineStart = ref("0");
-
-onMounted(() => {
-  const memberPosition = document
-    .getElementById(props.member)
-    .getBoundingClientRect();
-
-  const parentPosition = document
-    .getElementById(props.parent)
-    .getBoundingClientRect();
-
-  parentDistance.value = Math.abs(parentPosition.y - memberPosition.y);
-  childLineStart.value = `${props.halfImageSize - parentDistance.value}px`;
-});
+const parentDistance = props.childNumber * props.memberHeight;
+const childLineStart = `${props.halfImageSize - parentDistance}px`;
 </script>
 
 <style scoped>

@@ -14,11 +14,13 @@
       v-if="parent"
       :member="member"
       :parent="parent"
+      :child-number="childNumber"
+      :member-height="memberHeight"
       :half-image-size="imageSize / 2"
     />
 
     <!-- Line of the wedding  -->
-    <WeddingLine
+    <!-- <WeddingLine
       v-if="!showChildren"
       :member="member"
       :spouse="memberInfos.spouse"
@@ -26,7 +28,7 @@
       :birth-year="birthYear"
       :year-size="yearSize"
       :half-image-size="imageSize / 2"
-    />
+    /> -->
 
     <!-- Line marking the death of the member -->
     <DeathLine
@@ -39,11 +41,16 @@
     />
 
     <!-- Image of the member -->
-    <MemberImage :image="memberInfos.image" :image-size="imageSize" />
+    <MemberImage
+      :member="member"
+      :image="memberInfos.image"
+      :image-size="imageSize"
+    />
 
     <!-- Image of the spouse if got one -->
     <SpouseImage
       v-if="weddingYear"
+      :member="memberInfos.spouse"
       :image="spouseInfos.image"
       :image-size="imageSize"
       :year-size="yearSize"
@@ -55,18 +62,20 @@
   <!-- Nodes of the children of the member with his current spouse -->
   <Node
     v-if="showChildren"
-    v-for="child in commonChildren"
+    v-for="(child, index) in commonChildren"
     :member="child"
     :parent="member"
+    :child-number="index + 1"
     :starting-year="startingYear"
     :current-year="currentYear"
   />
 
   <!-- Nodes of the other children of the member -->
   <Node
-    v-for="child in otherChildren"
+    v-for="(child, index) in otherChildren"
     :member="child"
     :parent="member"
+    :child-number="(showChildren ? commonChildren.length : 0) + index + 1"
     :starting-year="startingYear"
     :current-year="currentYear"
   />
@@ -79,6 +88,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  childNumber: {
+    type: Number,
+    default: 0,
+  },
   startingYear: Number,
   currentYear: Number,
   first: {
@@ -87,8 +100,9 @@ const props = defineProps({
   },
 });
 
+const memberHeight = 111; // Size in px of the height of one member's line
 const yearSize = 136; // Size in px of the length of one year in the website
-const imageSize = 75;
+const imageSize = 75; // Size in px of the size of an image
 
 const memberInfos = await queryContent(props.member).findOne();
 const spouseInfos = await queryContent(memberInfos.spouse).findOne();
@@ -97,12 +111,13 @@ const spouseInfos = await queryContent(memberInfos.spouse).findOne();
 const commonChildren = memberInfos.children
   .filter((child) => spouseInfos.children.includes(child))
   .reverse();
+
 // Children only the member have
 const otherChildren = memberInfos.children
   .filter((child) => !commonChildren.includes(child))
   .reverse();
 
-const birthYear = parseInt(memberInfos.birth.slice(0, 4)); // year of birth
+const birthYear = parseInt(memberInfos.birth.slice(0, 4));
 const deathYear = memberInfos.death
   ? parseInt(memberInfos.death.slice(0, 4))
   : null;
@@ -110,17 +125,16 @@ const weddingYear = memberInfos.wedding
   ? parseInt(memberInfos.wedding.slice(0, 4))
   : null;
 
-// true if male and not first not married to sibling
-const showChildren =
-  memberInfos.male ||
-  !(props.first || memberInfos.siblings.includes(memberInfos.spouse));
+// true if male or (not first and spouse is external to family)
+const showChildren = memberInfos.male || (!props.first && spouseInfos.external);
 
-const lifeStart = `${yearSize * (birthYear - props.startingYear) + 5.5}px`; // distance in px between birth year and starting year of the timeline
+// distance in px between birth year and starting year of the timeline
+const lifeStart = `${yearSize * (birthYear - props.startingYear) + 5.5}px`;
 </script>
 
 <style scoped>
 .container {
-  margin-bottom: 1rem;
+  margin-top: 2rem;
   margin-left: v-bind("lifeStart");
 }
 

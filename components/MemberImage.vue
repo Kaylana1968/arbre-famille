@@ -1,11 +1,12 @@
 <template>
-  <div class="image-container">
+  <NuxtLink :to="`member?name=${member}`" class="image-container">
     <img :src="image" :width="imageSize" :height="imageSize" />
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup>
 const props = defineProps({
+  member: String,
   image: String,
   imageSize: Number,
 });
