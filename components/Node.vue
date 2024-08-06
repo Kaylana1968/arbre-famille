@@ -22,7 +22,7 @@
       v-if="!showChildren"
       :member="member"
       :spouse="memberInfos.spouse"
-      :wedding-year="parseInt(memberInfos.wedding.slice(0, 4))"
+      :wedding-year="weddingYear"
       :birth-year="birthYear"
       :year-size="yearSize"
       :half-image-size="imageSize / 2"
@@ -40,6 +40,16 @@
 
     <!-- Image of the member -->
     <MemberImage :image="memberInfos.image" :image-size="imageSize" />
+
+    <!-- Image of the spouse if got one -->
+    <SpouseImage
+      v-if="weddingYear"
+      :image="spouseInfos.image"
+      :image-size="imageSize"
+      :year-size="yearSize"
+      :wedding-year="weddingYear"
+      :birth-year="birthYear"
+    />
   </div>
 
   <!-- Nodes of the children of the member with his current spouse -->
@@ -95,6 +105,9 @@ const otherChildren = memberInfos.children
 const birthYear = parseInt(memberInfos.birth.slice(0, 4)); // year of birth
 const deathYear = memberInfos.death
   ? parseInt(memberInfos.death.slice(0, 4))
+  : null;
+const weddingYear = memberInfos.wedding
+  ? parseInt(memberInfos.wedding.slice(0, 4))
   : null;
 
 // true if male and not first not married to sibling

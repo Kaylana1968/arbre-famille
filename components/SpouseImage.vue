@@ -8,14 +8,22 @@
 const props = defineProps({
   image: String,
   imageSize: Number,
+  yearSize: Number,
+  weddingYear: Number,
+  birthYear: Number,
 });
 
 const imageSizePx = `${props.imageSize}px`;
+
+const weddingImageStart = `${
+  props.yearSize * (props.weddingYear - props.birthYear) - props.imageSize
+}px`;
 </script>
 
 <style scoped>
 .image-container {
   display: inline-block;
+  margin-left: v-bind("weddingImageStart");
   width: v-bind("imageSizePx");
   height: v-bind("imageSizePx");
   border-radius: 50%;
