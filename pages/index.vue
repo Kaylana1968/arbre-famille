@@ -1,5 +1,11 @@
 <template>
-  <div id="grabbable">
+  <div
+    id="grabbable"
+    @mousedown="mouseDown"
+    @mousemove="mouseMove"
+    @mouseup="mouseUp"
+    ref="grabbableElement"
+  >
     <main>
       <Node
         :member="elder.spouse"
@@ -28,28 +34,20 @@ const currentYear = new Date().getUTCFullYear();
 const elder = (await queryContent().sort({ birth: 1 }).find())[0];
 
 // Grab to slide
+const grabbableElement = ref(null);
 let holding = false;
 let posX = 0;
 let posY = 0;
-let element;
 
 function mouseDown(event) {
-  event.preventDefault();
   posX = event.clientX;
   posY = event.clientY;
   holding = true;
-  element.style.cursor = "grabbing";
-}
-
-function mouseUp(event) {
-  event.preventDefault();
-  holding = false;
-  element.style.cursor = "grab";
+  grabbableElement.value.style.cursor = "grabbing";
 }
 
 function mouseMove(event) {
   if (holding) {
-    event.preventDefault();
     const newPosX = event.clientX;
     const newPosY = event.clientY;
 
@@ -60,19 +58,10 @@ function mouseMove(event) {
   }
 }
 
-onMounted(() => {
-  element = document.getElementById("grabbable");
-
-  element.addEventListener("mousedown", mouseDown);
-  element.addEventListener("mouseup", mouseUp);
-  element.addEventListener("mousemove", mouseMove);
-});
-
-onBeforeUnmount(() => {
-  element.removeEventListener("mousedown", mouseDown);
-  element.removeEventListener("mouseup", mouseUp);
-  element.removeEventListener("mousemove", mouseMove);
-});
+function mouseUp() {
+  holding = false;
+  grabbableElement.value.style.cursor = "grab";
+}
 </script>
 
 <style scoped>

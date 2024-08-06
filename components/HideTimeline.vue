@@ -27,7 +27,6 @@ function hide() {
   background-color: #ddd;
   border: 1px solid gray;
   border-radius: 5px;
-  cursor: pointer;
 }
 
 #hide-timeline:hover {

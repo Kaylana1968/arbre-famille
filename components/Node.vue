@@ -100,7 +100,7 @@ const props = defineProps({
   },
 });
 
-const memberHeight = 111; // Size in px of the height of one member's line
+const memberHeight = 111.8; // Size in px of the height of one member's line
 const yearSize = 136; // Size in px of the length of one year in the website
 const imageSize = 75; // Size in px of the size of an image
 
@@ -134,7 +134,7 @@ const lifeStart = `${yearSize * (birthYear - props.startingYear) + 5.5}px`;
 
 <style scoped>
 .container {
-  margin-top: 2rem;
+  margin-bottom: 2rem;
   margin-left: v-bind("lifeStart");
 }
 
