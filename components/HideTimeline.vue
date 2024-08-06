@@ -13,7 +13,9 @@ onMounted(() => {
 });
 
 function hide() {
-  timeline.value.style.visibility = timelineVisible.value ? "hidden" : "visible";
+  timeline.value.style.visibility = timelineVisible.value
+    ? "hidden"
+    : "visible";
   timelineVisible.value = !timelineVisible.value;
 }
 </script>

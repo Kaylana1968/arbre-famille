@@ -63,7 +63,6 @@ function mouseUp() {
 
 <style scoped>
 #grabbable {
-  cursor: grab;
   user-select: none;
 }
 
