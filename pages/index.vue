@@ -4,7 +4,7 @@
     @mousedown="mouseDown"
     @mousemove="mouseMove"
     @mouseup="mouseUp"
-    ref="grabbableElement"
+    :style="`cursor: ${holding ? 'grabbing' : 'grab'}`"
   >
     <main>
       <Node
@@ -34,20 +34,18 @@ const currentYear = new Date().getUTCFullYear();
 const elder = (await queryContent().sort({ birth: 1 }).find())[0];
 
 // Grab to slide
-const grabbableElement = ref(null);
-let holding = false;
+const holding = ref(false);
 let posX = 0;
 let posY = 0;
 
 function mouseDown(event) {
   posX = event.clientX;
   posY = event.clientY;
-  holding = true;
-  grabbableElement.value.style.cursor = "grabbing";
+  holding.value = true;
 }
 
 function mouseMove(event) {
-  if (holding) {
+  if (holding.value) {
     const newPosX = event.clientX;
     const newPosY = event.clientY;
 
@@ -59,8 +57,7 @@ function mouseMove(event) {
 }
 
 function mouseUp() {
-  holding = false;
-  grabbableElement.value.style.cursor = "grab";
+  holding.value = false;
 }
 </script>
 

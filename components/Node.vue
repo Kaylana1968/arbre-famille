@@ -48,14 +48,12 @@
     />
 
     <!-- Image of the spouse if got one -->
-    <SpouseImage
+    <MemberImage
       v-if="weddingYear"
+      class="spouse-image"
       :member="memberInfos.spouse"
       :image="spouseInfos.image"
       :image-size="imageSize"
-      :year-size="yearSize"
-      :wedding-year="weddingYear"
-      :birth-year="birthYear"
     />
   </div>
 
@@ -125,6 +123,9 @@ const weddingYear = memberInfos.wedding
   ? parseInt(memberInfos.wedding.slice(0, 4))
   : null;
 
+// Distance between member image and wedding image
+const weddingStart = `${yearSize * (weddingYear - birthYear) - imageSize}px`;
+
 // true if male or (not first and spouse is external to family)
 const showChildren = memberInfos.male || (!props.first && spouseInfos.external);
 
@@ -141,5 +142,9 @@ const lifeStart = `${yearSize * (birthYear - props.startingYear) + 5.5}px`;
 svg {
   position: absolute;
   z-index: -10;
+}
+
+.spouse-image {
+  margin-left: v-bind("weddingStart");
 }
 </style>
