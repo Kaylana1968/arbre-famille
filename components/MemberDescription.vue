@@ -4,13 +4,15 @@
       <img
         :src="memberInfos.image"
         :alt="memberInfos.name"
-        class="mx-auto"
+        class="mx-auto rounded"
         height="200"
         width="200"
       />
     </div>
 
-    <h1 class="text-3xl my-4">{{ memberInfos.name }}</h1>
+    <h1 class="text-3xl mt-4">{{ memberInfos.name }}</h1>
+
+    <hr class="my-4 -ml-4 border-neutral-200">
 
     <table class="w-full">
       <tbody>
@@ -119,6 +121,11 @@ th,
 td {
   text-align: left;
   padding-bottom: 1rem;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
 }
 
 ul {
