@@ -6,7 +6,7 @@
     @mouseup="mouseUp"
     ref="button"
   >
-    <img :src="image" :width="imageSize" :height="imageSize" />
+    <img :src="image" :alt="member" :width="imageSize" :height="imageSize" />
   </button>
 </template>
 
@@ -37,7 +37,7 @@ function mouseUp(event) {
   event.preventDefault();
 
   if (!moved) {
-    navigateTo(`member?name=${props.member}`);
+    navigateTo(`/member/${props.member}`);
   }
 }
 </script>
