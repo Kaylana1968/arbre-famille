@@ -1,13 +1,6 @@
 <template>
-  <div v-if="start">
-    <span class="year">{{ year }}</span>
-
-    <br />
-
-    ├───────────
-  </div>
-  <div v-else>
-    <span class="year">{{ year }}</span>
+  <div>
+    <span class="-ml-2.5">{{ year }}</span>
 
     <br />
 
@@ -17,13 +10,6 @@
 
 <script setup>
 defineProps({
-  start: Boolean,
   year: Number,
 });
 </script>
-
-<style>
-.year {
-  margin-left: -0.6rem;
-}
-</style>

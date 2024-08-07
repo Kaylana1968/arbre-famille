@@ -1,12 +1,12 @@
 <template>
   <div
-    id="grabbable"
+    class="select-none"
     @mousedown="mouseDown"
     @mousemove="mouseMove"
     @mouseup="mouseUp"
     :style="`cursor: ${holding ? 'grabbing' : 'grab'}`"
   >
-    <main>
+    <main class="ml-[10.3px]">
       <Node
         :member="elder.spouse"
         :starting-year="startingYear"
@@ -60,15 +60,3 @@ function mouseUp() {
   holding.value = false;
 }
 </script>
-
-<style scoped>
-#grabbable {
-  user-select: none;
-}
-
-main {
-  min-width: 100vw;
-  min-height: 100vh;
-  margin-left: 10.3px;
-}
-</style>

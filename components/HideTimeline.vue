@@ -1,6 +1,9 @@
 <template>
-  <button id="hide-timeline" @click="hide()">
-    {{ timelineVisible ? "Hide" : "Show" }} timeline
+  <button
+    class="fixed top-4 right-4 py-1 px-2 bg-neutral-200 hover:bg-neutral-300 rounded border border-black"
+    @click="hide()"
+  >
+    {{ timelineVisible ? "Hide" : "Show" }}timeline
   </button>
 </template>
 
@@ -19,19 +22,3 @@ function hide() {
   timelineVisible.value = !timelineVisible.value;
 }
 </script>
-
-<style scoped>
-#hide-timeline {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.2rem 0.4rem;
-  background-color: #ddd;
-  border: 1px solid gray;
-  border-radius: 5px;
-}
-
-#hide-timeline:hover {
-  background-color: #aaa;
-}
-</style>

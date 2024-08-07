@@ -1,17 +1,18 @@
 <template>
-  <div id="infos">
+  <div class="w-2/5 pt-4 pl-4 border-l border-neutral-200">
     <div class="image-container">
       <img
         :src="memberInfos.image"
         :alt="memberInfos.name"
+        class="mx-auto"
         height="200"
         width="200"
       />
     </div>
 
-    <h1>{{ memberInfos.name }}</h1>
+    <h1 class="text-3xl my-4">{{ memberInfos.name }}</h1>
 
-    <table>
+    <table class="w-full">
       <tbody>
         <tr v-if="memberInfos.father">
           <th>Père</th>
@@ -114,31 +115,17 @@ function dateToString(date) {
 </script>
 
 <style scoped>
-#infos {
-  width: 40%;
-  border-left: 1px solid lightgray;
-  padding-left: 1rem;
-}
-
-.image-container {
-  text-align: center;
-}
-
-table {
-  width: 100%;
-}
-
 th,
 td {
   text-align: left;
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
 }
 
 ul {
-  padding-left: 0;
+  list-style: inside;
 }
 
 li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 </style>

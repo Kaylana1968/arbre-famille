@@ -1,8 +1,12 @@
 <template>
-  <NuxtLink to="/"><= Back to tree</NuxtLink>
+  <NuxtLink
+    class="absolute top-2 left-2 border border-black rounded py-1 px-2"
+    to="/"
+    >⇐ Back to tree</NuxtLink
+  >
 
-  <main>
-    <div id="tree"></div>
+  <main class="flex min-h-screen">
+    <div id="tree" class="w-3/5"></div>
 
     <MemberDescription :member-infos="memberInfos" />
   </main>
@@ -12,21 +16,3 @@
 const member = useRoute().params.slug;
 const memberInfos = await queryContent(member).findOne();
 </script>
-
-<style scoped>
-a {
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 0.2rem 0.4rem;
-  text-decoration: none;
-  color: black;
-}
-
-main {
-  display: flex;
-}
-
-#tree {
-  width: 60%;
-}
-</style>

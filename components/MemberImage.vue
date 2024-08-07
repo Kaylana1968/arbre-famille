@@ -47,7 +47,6 @@ function mouseUp(event) {
   display: inline-block;
   width: v-bind("imageSizePx");
   height: v-bind("imageSizePx");
-  padding: 0;
   border-radius: 50%;
   border: 1px solid black;
   overflow: hidden;

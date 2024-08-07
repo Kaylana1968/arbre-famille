@@ -1,10 +1,17 @@
 <template>
-  <div id="timeline" ref="timelineElement">
-    <TimelinePart
-      v-for="year in numberYear"
-      :year="year + startingYear - 1"
-      :start="year + startingYear - 1 === startingYear"
-    />
+  <div
+    class="sticky mx-12 bottom-4 inline-flex items-end"
+    ref="timelineElement"
+  >
+    <div>
+      <span class="-ml-2.5">{{ startingYear }}</span>
+
+      <br />
+
+      ├───────────
+    </div>
+
+    <TimelinePart v-for="year in numberYear" :year="year + startingYear" />
 
     <strong>></strong>
   </div>
@@ -16,7 +23,7 @@ const props = defineProps({
   currentYear: Number,
 });
 
-const numberYear = props.currentYear - props.startingYear + 1;
+const numberYear = props.currentYear - props.startingYear;
 const timelineElement = ref(null);
 
 onMounted(() => {
@@ -25,15 +32,3 @@ onMounted(() => {
   ).style.width = `${timelineElement.value.scrollWidth}px`;
 });
 </script>
-
-<style scoped>
-#timeline {
-  position: sticky;
-  margin: 0 3rem;
-  bottom: 1rem;
-  font-size: 1rem;
-  display: inline-flex;
-  align-items: end;
-  user-select: none;
-}
-</style>
