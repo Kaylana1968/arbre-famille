@@ -12,7 +12,7 @@
 
     <h1 class="text-3xl mt-4">{{ memberInfos.name }}</h1>
 
-    <hr class="my-4 -ml-4 border-neutral-200">
+    <hr class="my-4 -ml-4 border-neutral-200" />
 
     <table class="w-full">
       <tbody>
@@ -37,7 +37,7 @@
         <tr>
           <th>Naissance</th>
           <td>
-            {{ dateToString(memberInfos.birth) }}
+            {{ `${dateToString(memberInfos.birth)} (${age} ans)` }}
           </td>
         </tr>
 
@@ -114,6 +114,15 @@ const frenchDateConverter = new Intl.DateTimeFormat("fr-FR", {
 function dateToString(date) {
   return frenchDateConverter.format(new Date(date));
 }
+
+const now = new Date();
+const birth = new Date(props.memberInfos.birth);
+
+const monthDiff = now.getMonth() - birth.getMonth;
+const age =
+  now.getFullYear() -
+  birth.getFullYear() -
+  (monthDiff < 0 ? 1 : monthDiff > 0 ? 0 : now.getDate() - birth.getDate() < 0);
 </script>
 
 <style scoped>
