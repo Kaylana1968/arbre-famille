@@ -1,5 +1,11 @@
 <template>
-  <TimelineTree />
+  <ChangeTree @switch-type="withTimeline = !withTimeline" />
+
+  <TimelineTree v-if="withTimeline" />
+
+  <NormalTree v-else />
 </template>
 
-<script setup></script>
+<script setup>
+const withTimeline = useCookie("timeline");
+</script>

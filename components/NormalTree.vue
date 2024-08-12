@@ -1,44 +1,23 @@
 <template>
-  <div
+  <main
     class="select-none"
     @mousedown="mouseDown"
     @mousemove="mouseMove"
     @mouseup="mouseUp"
     :style="`cursor: ${holding ? 'grabbing' : 'grab'}`"
   >
-    <main class="ml-[10.3px]">
-      <TimelineNode
-        :member="elder.spouse"
-        :starting-year="startingYear"
-        :current-year="currentYear"
-        :first="true"
-      />
-
-      <TimelineNode
-        :member="elder._stem"
-        :starting-year="startingYear"
-        :current-year="currentYear"
-        :first="true"
-      />
-    </main>
-
-    <Timeline
-      v-if="!showTimeline"
-      :starting-year="startingYear"
-      :current-year="currentYear"
-    />
-  </div>
-
-  <HideTimeline
-    @hide-timeline="showTimeline = !showTimeline"
-    :show-timeline="showTimeline"
-  />
+    <NormalNode :member="elder._stem" />
+  </main>
 </template>
 
 <script setup>
-const startingYear = 1900;
-const currentYear = new Date().getUTCFullYear();
-const showTimeline = ref(true);
+const props = defineProps({
+  depth: {
+    type: Number,
+    default: -1,
+  },
+});
+
 const elder = (await queryContent().sort({ birth: 1 }).find())[0];
 
 // Grab to slide
