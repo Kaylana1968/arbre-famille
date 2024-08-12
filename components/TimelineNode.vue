@@ -58,7 +58,7 @@
   </div>
 
   <!-- Nodes of the children of the member with his current spouse -->
-  <Node
+  <TimelineNode
     v-if="showChildren"
     v-for="(child, index) in commonChildren"
     :member="child"
@@ -69,7 +69,7 @@
   />
 
   <!-- Nodes of the other children of the member -->
-  <Node
+  <TimelineNode
     v-for="(child, index) in otherChildren"
     :member="child"
     :parent="member"
