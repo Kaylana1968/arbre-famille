@@ -1,10 +1,10 @@
 <template>
-  <svg class="wedding-line" :width="lineLength" height="2">
+  <svg class="child-line" width="2" :height="lineLength">
     <line
-      x1="0"
-      y1="1"
-      :x2="lineLength"
-      y2="1"
+      x1="1"
+      y1="0"
+      x2="1"
+      :y2="lineLength"
       stroke="gray"
       stroke-width="2"
     />
@@ -19,12 +19,14 @@ const props = defineProps({
 });
 
 const halfImageSizePx = `${props.halfImageSize}px`;
-const lineStart = computed(() => `${props.posX + props.halfImageSize}px`);
-const lineLength = 2 * props.halfImageSize + props.spouseSpacing;
+const lineStart = computed(
+  () => `${props.posX + 2 * props.halfImageSize + props.spouseSpacing / 2}px`
+);
+const lineLength = props.spouseSpacing + props.halfImageSize;
 </script>
 
 <style scoped>
-.wedding-line {
+.child-line {
   margin-top: v-bind("halfImageSizePx");
   margin-left: v-bind("lineStart");
 }

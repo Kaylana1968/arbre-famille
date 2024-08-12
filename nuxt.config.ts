@@ -6,5 +6,5 @@ export default defineNuxtConfig({
     { path: "~/components/TimelineTree", prefix: "TT" },
     "~/components",
   ],
-  modules: ["@nuxt/content", "@nuxtjs/tailwindcss"],
+  modules: ["@nuxt/content", "@nuxtjs/tailwindcss", "@nuxt/image"],
 });

@@ -1,12 +1,14 @@
 <template>
   <div class="w-2/5 pt-4 pl-4 border-l border-neutral-200">
     <div class="image-container">
-      <img
+      <NuxtImg
         :src="memberInfos.image"
         :alt="memberInfos.name"
-        class="mx-auto rounded"
+        format="webp"
+        quality="80"
         height="250"
         width="250"
+        class="mx-auto rounded"
       />
     </div>
 

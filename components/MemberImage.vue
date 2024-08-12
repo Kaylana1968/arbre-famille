@@ -6,7 +6,14 @@
     @mouseup="mouseUp"
     ref="button"
   >
-    <img :src="image" :alt="member" :width="imageSize" :height="imageSize" />
+    <NuxtImg
+      :src="image"
+      :alt="member"
+      format="webp"
+      quality="60"
+      :width="imageSize"
+      :height="imageSize"
+    />
   </button>
 </template>
 
