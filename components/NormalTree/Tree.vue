@@ -6,7 +6,9 @@
     @mouseup="mouseUp"
     :style="`cursor: ${holding ? 'grabbing' : 'grab'}`"
   >
-    <NTNode :member="elder._stem" />
+    <div class="flex justify-center">
+      <NTNode :member="elder._stem" :first="true" />
+    </div>
   </main>
 </template>
 

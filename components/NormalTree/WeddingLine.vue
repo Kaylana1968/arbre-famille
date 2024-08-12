@@ -13,13 +13,15 @@
 
 <script setup>
 const props = defineProps({
-  posX: Number,
+  relativePosX: Number,
   spouseSpacing: Number,
   halfImageSize: Number,
 });
 
 const halfImageSizePx = `${props.halfImageSize}px`;
-const lineStart = computed(() => `${props.posX + props.halfImageSize}px`);
+const lineStart = computed(
+  () => `${props.relativePosX + props.halfImageSize}px`
+);
 const lineLength = 2 * props.halfImageSize + props.spouseSpacing;
 </script>
 

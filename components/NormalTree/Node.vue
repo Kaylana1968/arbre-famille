@@ -1,15 +1,18 @@
 <template>
   <div ref="globalElement" class="mx-12 text-center">
-    <NTWeddingLine
-      v-if="memberInfos.spouse"
-      :pos-x="posX"
+    <NTChildLine
+      v-if="!first"
+      :absolute-pos-x="absolutePosX"
+      :relative-pos-x="relativePosX"
+      :parent-pos-x="parentPosX"
       :spouse-spacing="spouseSpacing"
+      :line-height="lineHeight"
       :half-image-size="imageSize / 2"
     />
 
-    <NTChildLine
-      v-if="children.size"
-      :pos-x="posX"
+    <NTWeddingLine
+      v-if="memberInfos.spouse"
+      :relative-pos-x="relativePosX"
       :spouse-spacing="spouseSpacing"
       :half-image-size="imageSize / 2"
     />
@@ -29,8 +32,12 @@
       class="ml-8"
     />
 
-    <div class="flex justify-center mt-20">
-      <NTNode v-for="child in children" :member="child" />
+    <div v-if="children.size" class="flex justify-center mt-20">
+      <NTNode
+        v-for="child in children"
+        :member="child"
+        :parent-pos-x="absolutePosX"
+      />
     </div>
   </div>
 </template>
@@ -38,9 +45,18 @@
 <script setup>
 const props = defineProps({
   member: String,
+  first: {
+    type: Boolean,
+    default: false,
+  },
+  parentPosX: {
+    type: Number,
+    default: null,
+  },
 });
 
 const imageSize = 75; // Size in px of the size of an image
+const lineHeight = 159.25; // Size that a line takes
 const spouseSpacing = 32; // Size in px between a member and his spouse
 
 const memberInfos = await queryContent(props.member).findOne();
@@ -50,12 +66,20 @@ const children = new Set(memberInfos.children.concat(spouseInfos.children));
 
 const globalElement = ref(null);
 const element = ref(null);
-const posX = ref(0);
+const absolutePosX = ref(0);
+const relativePosX = ref(0);
+
+const x = computed(() => {
+  console.log(element)
+  return element.value ? element.value.$el.getBoundingClientRect().left : 0
+})
+
+console.log(x.value)
 
 onMounted(() => {
-  posX.value =
-    element.value.$el.getBoundingClientRect().left -
-    globalElement.value.getBoundingClientRect().left;
+  absolutePosX.value = element.value.$el.getBoundingClientRect().left;
+  relativePosX.value =
+    absolutePosX.value - globalElement.value.getBoundingClientRect().left;
 });
 </script>
 
