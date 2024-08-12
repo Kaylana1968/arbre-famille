@@ -36,10 +36,10 @@
 </template>
 
 <script setup>
-const startingYear = 1920;
+const elder = (await queryContent().sort({ birth: 1 }).find())[0];
+const startingYear = Number(elder.birth.slice(0, 4));
 const currentYear = new Date().getUTCFullYear();
 const showTimeline = ref(true);
-const elder = (await queryContent().sort({ birth: 1 }).find())[0];
 
 // Grab to slide
 const holding = ref(false);

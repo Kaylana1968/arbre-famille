@@ -1,4 +1,9 @@
 <template>
+  <NTWeddingLine
+    :spouse-spacing="spouseSpacing"
+    :half-image-size="imageSize / 2"
+  />
+
   <MemberImage
     :member="member"
     :image="memberInfos.image"
@@ -21,6 +26,7 @@ const memberInfos = await queryContent(props.member).findOne();
 const spouseInfos = await queryContent(memberInfos.spouse).findOne();
 
 const imageSize = 75; // Size in px of the size of an image
+const spouseSpacing = 32; // Size in px between a member and his spouse
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <ChangeTree @switch-type="withTimeline = !withTimeline" />
+  <!-- <ChangeTree @switch-type="withTimeline = !withTimeline" /> -->
 
   <TTTree v-if="withTimeline" />
 
