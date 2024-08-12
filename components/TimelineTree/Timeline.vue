@@ -11,7 +11,7 @@
       ├───────────
     </div>
 
-    <TimelinePart v-for="year in numberYear" :year="year + startingYear" />
+    <TTTimelinePart v-for="year in numberYear" :year="year + startingYear" />
 
     <strong>></strong>
   </div>

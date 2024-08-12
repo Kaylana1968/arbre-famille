@@ -6,7 +6,7 @@
     @mouseup="mouseUp"
     :style="`cursor: ${holding ? 'grabbing' : 'grab'}`"
   >
-    <NormalNode :member="elder._stem" />
+    <NTNode :member="elder._stem" />
   </main>
 </template>
 

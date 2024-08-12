@@ -7,14 +7,14 @@
     :style="`cursor: ${holding ? 'grabbing' : 'grab'}`"
   >
     <main class="ml-[10.3px]">
-      <TimelineNode
+      <TTNode
         :member="elder.spouse"
         :starting-year="startingYear"
         :current-year="currentYear"
         :first="true"
       />
 
-      <TimelineNode
+      <TTNode
         :member="elder._stem"
         :starting-year="startingYear"
         :current-year="currentYear"
@@ -22,21 +22,21 @@
       />
     </main>
 
-    <Timeline
+    <TTTimeline
       v-if="showTimeline"
       :starting-year="startingYear"
       :current-year="currentYear"
     />
   </div>
 
-  <HideTimeline
+  <TTHideTimeline
     @hide-timeline="showTimeline = !showTimeline"
     :show-timeline="showTimeline"
   />
 </template>
 
 <script setup>
-const startingYear = 1900;
+const startingYear = 1920;
 const currentYear = new Date().getUTCFullYear();
 const showTimeline = ref(true);
 const elder = (await queryContent().sort({ birth: 1 }).find())[0];

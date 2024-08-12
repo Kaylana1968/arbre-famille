@@ -1,9 +1,9 @@
 <template>
   <ChangeTree @switch-type="withTimeline = !withTimeline" />
 
-  <TimelineTree v-if="withTimeline" />
+  <TTTree v-if="withTimeline" />
 
-  <NormalTree v-else />
+  <NTTree v-else />
 </template>
 
 <script setup>

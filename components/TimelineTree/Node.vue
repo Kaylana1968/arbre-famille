@@ -1,7 +1,7 @@
 <template>
   <div :id="member" class="member-container">
     <!-- Line of the member  -->
-    <LifeLine
+    <TTLifeLine
       :year-size="yearSize"
       :death-year="deathYear"
       :current-year="currentYear"
@@ -10,7 +10,7 @@
     />
 
     <!-- Line that link parent line to his child -->
-    <ChildLine
+    <TTChildLine
       v-if="parent"
       :member="member"
       :parent="parent"
@@ -20,7 +20,7 @@
     />
 
     <!-- Line of the wedding  -->
-    <!-- <WeddingLine
+    <!-- <TTWeddingLine
       v-if="!showChildren"
       :member="member"
       :spouse="memberInfos.spouse"
@@ -31,7 +31,7 @@
     /> -->
 
     <!-- Line marking the death of the member -->
-    <DeathLine
+    <TTDeathLine
       v-if="deathYear"
       :year-size="yearSize"
       :death-year="deathYear"
@@ -58,7 +58,7 @@
   </div>
 
   <!-- Nodes of the children of the member with his current spouse -->
-  <TimelineNode
+  <TTNode
     v-if="showChildren"
     v-for="(child, index) in commonChildren"
     :member="child"
@@ -69,7 +69,7 @@
   />
 
   <!-- Nodes of the other children of the member -->
-  <TimelineNode
+  <TTNode
     v-for="(child, index) in otherChildren"
     :member="child"
     :parent="member"
