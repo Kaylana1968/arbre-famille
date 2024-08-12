@@ -23,7 +23,7 @@
     </main>
 
     <Timeline
-      v-if="!showTimeline"
+      v-if="showTimeline"
       :starting-year="startingYear"
       :current-year="currentYear"
     />

@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    class="absolute top-2 left-2 border border-black rounded py-1 px-2"
+    class="absolute top-4 left-4 bg-neutral-200 hover:bg-neutral-300 rounded border border-black py-1 px-2"
     to="/"
   >
     ⇐ Retour à l'arbre

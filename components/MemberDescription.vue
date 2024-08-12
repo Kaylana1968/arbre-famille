@@ -5,8 +5,8 @@
         :src="memberInfos.image"
         :alt="memberInfos.name"
         class="mx-auto rounded"
-        height="200"
-        width="200"
+        height="250"
+        width="250"
       />
     </div>
 
