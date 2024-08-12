@@ -1,14 +1,12 @@
 <template>
   <main
-    class="select-none"
+    class="select-none flex justify-center mt-4"
     @mousedown="mouseDown"
     @mousemove="mouseMove"
     @mouseup="mouseUp"
-    :style="`cursor: ${holding ? 'grabbing' : 'grab'}`"
+    :style="`cursor: ${holding ? 'grabbing' : 'grab'}; min-width: ${minWidth}`"
   >
-    <div class="flex justify-center">
-      <NTNode :member="elder._stem" :first="true" />
-    </div>
+    <NTNode :member="elder._stem" :first="true" />
   </main>
 </template>
 
@@ -21,6 +19,15 @@ const props = defineProps({
 });
 
 const elder = (await queryContent().sort({ birth: 1 }).find())[0];
+
+const minWidth = computed(() => {
+  if (document) {
+    const firstDiv = document.querySelector("div");
+    return `${firstDiv.scrollWidth}px`;
+  } else {
+    return 0
+  }
+});
 
 // Grab to slide
 const holding = ref(false);

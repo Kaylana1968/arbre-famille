@@ -66,21 +66,15 @@ const children = new Set(memberInfos.children.concat(spouseInfos.children));
 
 const globalElement = ref(null);
 const element = ref(null);
-const absolutePosX = ref(0);
-const relativePosX = ref(0);
+const absolutePosX = computed(() =>
+  element.value ? element.value.$el.getBoundingClientRect().left : 0
+);
 
-const x = computed(() => {
-  console.log(element)
-  return element.value ? element.value.$el.getBoundingClientRect().left : 0
-})
-
-console.log(x.value)
-
-onMounted(() => {
-  absolutePosX.value = element.value.$el.getBoundingClientRect().left;
-  relativePosX.value =
-    absolutePosX.value - globalElement.value.getBoundingClientRect().left;
-});
+const relativePosX = computed(() =>
+  globalElement.value
+    ? absolutePosX.value - globalElement.value.getBoundingClientRect().left
+    : 0
+);
 </script>
 
 <style scoped>
