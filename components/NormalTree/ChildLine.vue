@@ -34,7 +34,9 @@
   <svg
     v-else
     class="child-line"
-    :style="`margin-left: ${relativePosX + halfImageSize + horizontalLineLength - 1}px`"
+    :style="`margin-left: ${
+      relativePosX + halfImageSize + horizontalLineLength - 1
+    }px`"
     :width="-horizontalLineLength + 1"
     :height="lineHeight"
   >
@@ -87,7 +89,7 @@ const horizontalLineLength = computed(
 );
 
 const verticalLineStart = `-${props.lineHeight - props.halfImageSize}px`;
-const topVerticalLineEnd = props.lineHeight * 0.7;
+const topVerticalLineEnd = props.lineHeight * 0.6;
 </script>
 
 <style scoped>

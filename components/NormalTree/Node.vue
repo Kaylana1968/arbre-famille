@@ -1,5 +1,5 @@
 <template>
-  <div ref="globalElement" class="mx-12 text-center">
+  <div ref="globalElement" class="text-center" :class="!first && 'mx-12'">
     <NTChildLine
       v-if="!first"
       :absolute-pos-x="absolutePosX"
@@ -32,7 +32,7 @@
       class="ml-8"
     />
 
-    <div v-if="children.size" class="flex justify-center mt-20">
+    <div v-if="children.size || true" class="flex justify-center mt-20">
       <NTNode
         v-for="child in children"
         :member="child"
@@ -63,9 +63,11 @@ const memberInfos = await queryContent(props.member).findOne();
 const spouseInfos = await queryContent(memberInfos.spouse).findOne();
 
 const children = new Set(memberInfos.children.concat(spouseInfos.children));
+// const children = memberInfos.children.concat(spouseInfos.children).concat(spouseInfos.children);
 
 const globalElement = ref(null);
 const element = ref(null);
+
 const absolutePosX = computed(() =>
   element.value ? element.value.$el.getBoundingClientRect().left : 0
 );
@@ -75,11 +77,18 @@ const relativePosX = computed(() =>
     ? absolutePosX.value - globalElement.value.getBoundingClientRect().left
     : 0
 );
+
+const visibility = ref("hidden")
+
+onMounted(() => {
+  visibility.value = "visible"
+})
 </script>
 
 <style scoped>
 svg {
   position: absolute;
   z-index: -10;
+  visibility: v-bind("visibility");
 }
 </style>

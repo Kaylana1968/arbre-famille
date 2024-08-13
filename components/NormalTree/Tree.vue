@@ -4,7 +4,7 @@
     @mousedown="mouseDown"
     @mousemove="mouseMove"
     @mouseup="mouseUp"
-    :style="`cursor: ${holding ? 'grabbing' : 'grab'}; min-width: ${minWidth}`"
+    :style="`cursor: ${holding ? 'grabbing' : 'grab'};`"
   >
     <NTNode :member="elder._stem" :first="true" />
   </main>
@@ -20,13 +20,14 @@ const props = defineProps({
 
 const elder = (await queryContent().sort({ birth: 1 }).find())[0];
 
-const minWidth = computed(() => {
-  if (document) {
-    const firstDiv = document.querySelector("div");
-    return `${firstDiv.scrollWidth}px`;
-  } else {
-    return 0
-  }
+const minWidth = ref(0);
+
+onMounted(() => {
+  // Width of the first div containing all the nodes so largest div of the page
+  minWidth.value = `${document.querySelector("main div").scrollWidth}px`;
+
+  // Scrolls to the left
+  document.querySelector("main").scrollTo(0, 0);
 });
 
 // Grab to slide
@@ -56,3 +57,9 @@ function mouseUp() {
   holding.value = false;
 }
 </script>
+
+<style scoped>
+main {
+  min-width: v-bind("minWidth");
+}
+</style>
